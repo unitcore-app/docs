@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Database connection error — UnitCore API errors</title>
+<meta name="description" content="Could not connect to the database to perform restore.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/backup/db_connection_error">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Backup</p>
+  <div class="header-row">
+    <h1>Database connection error</h1>
+    <span class="badge badge-status-500">500</span>
+  </div>
+  <p class="code-text"><code>backup.db_connection_error</code></p>
+  <p class="summary">Could not connect to the database to perform restore.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>Database is down or unreachable.</li>
+    <li>Restore credentials are wrong.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Verify the database is up and the restore credentials are valid.</li>
+    <li>Check network policies between the Hub and the target database.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.BackupDbConnectionError</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

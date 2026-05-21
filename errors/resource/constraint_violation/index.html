@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Constraint violation — UnitCore API errors</title>
+<meta name="description" content="The request would violate a data integrity constraint.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/resource/constraint_violation">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Resource</p>
+  <div class="header-row">
+    <h1>Constraint violation</h1>
+    <span class="badge badge-status-409">409</span>
+  </div>
+  <p class="code-text"><code>resource.constraint_violation</code></p>
+  <p class="summary">The request would violate a data integrity constraint.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>A foreign key would dangle.</li>
+    <li>A check constraint was violated.</li>
+    <li>A delete was attempted against a record still referenced by others.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Remove or update referencing records first.</li>
+    <li>Inspect the `detail` field of the response for the exact constraint name.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.ConstraintViolation</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

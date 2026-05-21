@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Account locked — UnitCore API errors</title>
+<meta name="description" content="This account is locked. Please contact support.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/auth/account_locked">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Authentication &amp; authorization</p>
+  <div class="header-row">
+    <h1>Account locked</h1>
+    <span class="badge badge-status-423">423</span>
+  </div>
+  <p class="code-text"><code>auth.account_locked</code></p>
+  <p class="summary">This account is locked. Please contact support.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>Too many failed sign-in attempts.</li>
+    <li>Account locked by an administrator.</li>
+    <li>Suspicious activity triggered an automatic lockout.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Wait for the lockout window to expire, or contact your administrator to unlock the account.</li>
+    <li>Hub operators can unlock from `Hub → Users → &lt;user&gt; → Unlock`.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.AuthAccountLocked</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

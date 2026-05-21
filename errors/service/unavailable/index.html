@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Service unavailable — UnitCore API errors</title>
+<meta name="description" content="The service is temporarily unavailable. Please try again later.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/service/unavailable">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Service</p>
+  <div class="header-row">
+    <h1>Service unavailable</h1>
+    <span class="badge badge-status-503">503</span>
+  </div>
+  <p class="code-text"><code>service.unavailable</code></p>
+  <p class="summary">The service is temporarily unavailable. Please try again later.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>A downstream dependency (database, cache, queue) is unreachable.</li>
+    <li>The service is starting up or shutting down.</li>
+    <li>Rate limiting / circuit breaker tripped.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Retry with exponential backoff.</li>
+    <li>Check the service status page or operator dashboards.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.ServiceUnavailable</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

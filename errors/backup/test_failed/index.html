@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Backup test failed — UnitCore API errors</title>
+<meta name="description" content="Backup restoration test encountered an error.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/backup/test_failed">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Backup</p>
+  <div class="header-row">
+    <h1>Backup test failed</h1>
+    <span class="badge badge-status-500">500</span>
+  </div>
+  <p class="code-text"><code>backup.test_failed</code></p>
+  <p class="summary">Backup restoration test encountered an error.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>The test restore environment could not be spun up.</li>
+    <li>The backup file is corrupt.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Inspect the backup test logs.</li>
+    <li>Re-run a fresh backup and test it again.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.BackupTestFailed</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

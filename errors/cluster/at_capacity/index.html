@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster at capacity — UnitCore API errors</title>
+<meta name="description" content="The cluster does not have sufficient capacity to provision this resource.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/cluster/at_capacity">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Cluster</p>
+  <div class="header-row">
+    <h1>Cluster at capacity</h1>
+    <span class="badge badge-status-503">503</span>
+  </div>
+  <p class="code-text"><code>cluster.at_capacity</code></p>
+  <p class="summary">The cluster does not have sufficient capacity to provision this resource.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>No worker node has enough CPU / memory / storage to schedule the new pod.</li>
+    <li>Storage class has hit its provisioned quota.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Scale the cluster (add a worker, increase Longhorn capacity).</li>
+    <li>Retry once cluster operators have grown capacity.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.ClusterAtCapacity</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

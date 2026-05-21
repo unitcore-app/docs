@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Duplicate resource — UnitCore API errors</title>
+<meta name="description" content="A resource with the same unique value already exists.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/resource/duplicate">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Resource</p>
+  <div class="header-row">
+    <h1>Duplicate resource</h1>
+    <span class="badge badge-status-409">409</span>
+  </div>
+  <p class="code-text"><code>resource.duplicate</code></p>
+  <p class="summary">A resource with the same unique value already exists.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>A unique constraint was hit (slug, email, code).</li>
+    <li>A concurrent request created the same record a moment earlier.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Read the existing record before creating a new one.</li>
+    <li>Use idempotency keys for safe retries.</li>
+    <li>Pick a different unique value (slug, code) and retry.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.Duplicate</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

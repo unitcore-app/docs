@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Site context mismatch — UnitCore API errors</title>
+<meta name="description" content="The request&#x27;s site context does not match the resource&#x27;s site.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/site/context_mismatch">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Site</p>
+  <div class="header-row">
+    <h1>Site context mismatch</h1>
+    <span class="badge badge-status-403">403</span>
+  </div>
+  <p class="code-text"><code>site.context_mismatch</code></p>
+  <p class="summary">The request&#x27;s site context does not match the resource&#x27;s site.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>Attempted to read or modify a record from a different tenant.</li>
+    <li>Token&#x27;s site claim does not match the `X-Site-Id` header.</li>
+    <li>User assumed a site they are not a member of.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Confirm the site id on both the token and the request header match the resource&#x27;s site.</li>
+    <li>Re-authenticate with the correct site selected.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.SiteContextMismatch</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

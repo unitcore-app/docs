@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Invalid state transition — UnitCore API errors</title>
+<meta name="description" content="The requested state change is not allowed from the current state.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/resource/invalid_state_transition">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Resource</p>
+  <div class="header-row">
+    <h1>Invalid state transition</h1>
+    <span class="badge badge-status-409">409</span>
+  </div>
+  <p class="code-text"><code>resource.invalid_state_transition</code></p>
+  <p class="summary">The requested state change is not allowed from the current state.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>The workflow definition does not allow this transition (e.g. `draft → archived` without going through `published`).</li>
+    <li>The resource is locked by another process.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Fetch the resource and inspect its current status.</li>
+    <li>Follow the workflow path defined by the owning module.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.InvalidStateTransition</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

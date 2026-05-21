@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UnitCore API errors</title>
+<meta name="description" content="Reference for UnitCore CRM API error codes (RFC 7807 problem+json).">
+<link rel="canonical" href="https://docs.unitcore.app/">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <h1>API error reference</h1>
+    <p>Every UnitCore CRM API error response follows <a href="https://datatracker.ietf.org/doc/html/rfc7807">RFC 7807</a>. The <code>code</code> field is the canonical, stable identifier for the error class and is what you should match in client code. Pages below describe each <code>code</code>, its typical causes, and resolution steps.</p>
+
+    <div class="search">
+      <input id="search" type="search" placeholder="Search by code, title, or keyword (e.g. validation, auth, backup)" autocomplete="off" autofocus>
+      <p class="hint" id="hint"></p>
+    </div>
+  </section>
+
+  <section id="groups"></section>
+
+  <section class="example">
+    <h2>Example response shape</h2>
+<pre><code>HTTP/1.1 409 Conflict
+Content-Type: application/problem+json
+
+{
+  "type": "https://docs.unitcore.app/errors/resource/duplicate",
+  "title": "Duplicate resource",
+  "status": 409,
+  "code": "resource.duplicate",
+  "detail": "A site with slug \"acme\" already exists.",
+  "traceId": "00-9b1c1e4d...-01"
+}</code></pre>
+    <p>When matching errors, use <code>code</code> — never <code>title</code> or <code>detail</code>, which are localized for display.</p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+
+<script src="/app.js"></script>
+</body>
+</html>

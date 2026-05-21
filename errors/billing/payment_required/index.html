@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Payment required — UnitCore API errors</title>
+<meta name="description" content="A valid payment method is required to complete this operation.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/billing/payment_required">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Billing</p>
+  <div class="header-row">
+    <h1>Payment required</h1>
+    <span class="badge badge-status-402">402</span>
+  </div>
+  <p class="code-text"><code>billing.payment_required</code></p>
+  <p class="summary">A valid payment method is required to complete this operation.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>Subscription expired or was cancelled.</li>
+    <li>Payment method is missing or declined.</li>
+    <li>Operation is on a paid plan and the tenant is on a free plan.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Update the payment method in the billing portal.</li>
+    <li>Upgrade to a plan that includes this feature.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.PaymentRequired</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

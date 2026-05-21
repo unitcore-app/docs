@@ -1,0 +1,626 @@
+{
+  "source": "unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs",
+  "sourceUrl": "https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs",
+  "groups": [
+    {
+      "id": "validation",
+      "title": "Validation",
+      "description": "Input failed server-side validation.",
+      "codes": [
+        {
+          "code": "validation.failed",
+          "status": 400,
+          "title": "Validation failed",
+          "summary": "One or more validation errors occurred.",
+          "causes": [
+            "A required field was omitted from the request body.",
+            "A field value did not match its type (e.g. string where GUID expected).",
+            "A composite rule across multiple fields was violated."
+          ],
+          "resolution": [
+            "Read the `errors` array on the problem+json response; each entry names the failing field and rule.",
+            "Re-submit the request with corrected field values.",
+            "If the validation rule looks wrong, file an issue against the owning module."
+          ]
+        },
+        {
+          "code": "validation.field_required",
+          "status": 400,
+          "title": "Required field missing",
+          "summary": "A field marked as required was not present or was empty.",
+          "causes": [
+            "The client omitted the property from the JSON body.",
+            "The property was sent as `null` or an empty string."
+          ],
+          "resolution": [
+            "Send the field with a non-empty value.",
+            "Check the OpenAPI schema to confirm which fields are required for the endpoint."
+          ]
+        },
+        {
+          "code": "validation.field_invalid",
+          "status": 400,
+          "title": "Field has an invalid value",
+          "summary": "A field was present but its value did not pass type or format checks.",
+          "causes": [
+            "Wrong data type (string where number expected, etc.).",
+            "Value outside an allowed enum / range.",
+            "Malformed GUID, date, or email."
+          ],
+          "resolution": [
+            "Inspect the `errors` array — each entry includes the field path and the failed rule.",
+            "Normalize the value client-side before sending."
+          ]
+        },
+        {
+          "code": "validation.argument",
+          "status": 400,
+          "title": "Invalid argument",
+          "summary": "One or more arguments are invalid.",
+          "causes": [
+            "Query-string parameter failed model binding.",
+            "A route value did not match its constraint."
+          ],
+          "resolution": [
+            "Verify all query-string and route parameters match the API contract.",
+            "URL-encode values that contain reserved characters."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "resource",
+      "title": "Resource",
+      "description": "Errors involving the requested record itself.",
+      "codes": [
+        {
+          "code": "resource.not_found",
+          "status": 404,
+          "title": "Resource not found",
+          "summary": "The requested resource was not found.",
+          "causes": [
+            "The id in the URL does not exist for the current tenant.",
+            "The record was soft-deleted (`is_deleted = true`).",
+            "The caller is in the wrong site context and the record belongs to a different site."
+          ],
+          "resolution": [
+            "Verify the id is correct and current.",
+            "Confirm the request includes the right `X-Site-Id` (or equivalent) header.",
+            "If you expect the record to still exist, check the audit log for a delete event."
+          ]
+        },
+        {
+          "code": "resource.duplicate",
+          "status": 409,
+          "title": "Duplicate resource",
+          "summary": "A resource with the same unique value already exists.",
+          "causes": [
+            "A unique constraint was hit (slug, email, code).",
+            "A concurrent request created the same record a moment earlier."
+          ],
+          "resolution": [
+            "Read the existing record before creating a new one.",
+            "Use idempotency keys for safe retries.",
+            "Pick a different unique value (slug, code) and retry."
+          ]
+        },
+        {
+          "code": "resource.constraint_violation",
+          "status": 409,
+          "title": "Constraint violation",
+          "summary": "The request would violate a data integrity constraint.",
+          "causes": [
+            "A foreign key would dangle.",
+            "A check constraint was violated.",
+            "A delete was attempted against a record still referenced by others."
+          ],
+          "resolution": [
+            "Remove or update referencing records first.",
+            "Inspect the `detail` field of the response for the exact constraint name."
+          ]
+        },
+        {
+          "code": "resource.concurrency_conflict",
+          "status": 409,
+          "title": "Concurrency conflict",
+          "summary": "The resource was modified by another request. Please reload and try again.",
+          "causes": [
+            "Optimistic concurrency token (rowversion / updatedAt) did not match server state.",
+            "Two clients edited the same record at the same time."
+          ],
+          "resolution": [
+            "Re-fetch the resource to get the latest concurrency token.",
+            "Re-apply your changes on top of the fresh copy and submit again."
+          ]
+        },
+        {
+          "code": "resource.invalid_state_transition",
+          "status": 409,
+          "title": "Invalid state transition",
+          "summary": "The requested state change is not allowed from the current state.",
+          "causes": [
+            "The workflow definition does not allow this transition (e.g. `draft → archived` without going through `published`).",
+            "The resource is locked by another process."
+          ],
+          "resolution": [
+            "Fetch the resource and inspect its current status.",
+            "Follow the workflow path defined by the owning module."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "auth",
+      "title": "Authentication & authorization",
+      "description": "The caller's identity or permissions are wrong.",
+      "codes": [
+        {
+          "code": "auth.unauthorized",
+          "status": 401,
+          "title": "Authentication required",
+          "summary": "Authentication is required to access this resource.",
+          "causes": [
+            "Missing `Authorization` header.",
+            "Session cookie expired or was cleared.",
+            "Calling a protected endpoint anonymously."
+          ],
+          "resolution": [
+            "Sign in and retry with a valid token / cookie.",
+            "If using a service principal, confirm its credentials are still active."
+          ]
+        },
+        {
+          "code": "auth.forbidden",
+          "status": 403,
+          "title": "Forbidden",
+          "summary": "You do not have permission to access this resource.",
+          "causes": [
+            "The user is authenticated but lacks the required permission.",
+            "The endpoint has `[Authorize]` but no `[RequirePermission]` — strict mode rejects it by default.",
+            "Calling a Hub-only endpoint from a client tenant."
+          ],
+          "resolution": [
+            "Confirm the user's role grants the required permission.",
+            "If the endpoint is missing `[RequirePermission]`, raise an audit ticket — strict mode is on in production."
+          ]
+        },
+        {
+          "code": "auth.invalid_credentials",
+          "status": 401,
+          "title": "Invalid credentials",
+          "summary": "The email or password is incorrect.",
+          "causes": [
+            "Wrong email or password.",
+            "Account exists on a different site.",
+            "Account was migrated and password hash format has changed."
+          ],
+          "resolution": [
+            "Confirm the email is correct and registered on this site.",
+            "Use the password-reset flow if the password is forgotten."
+          ]
+        },
+        {
+          "code": "auth.token_expired",
+          "status": 401,
+          "title": "Token expired",
+          "summary": "Your session has expired. Please sign in again.",
+          "causes": [
+            "Access token lifetime elapsed.",
+            "Refresh token revoked."
+          ],
+          "resolution": [
+            "Refresh the token via `/api/v1/auth/refresh`.",
+            "If refresh fails, sign the user in again."
+          ]
+        },
+        {
+          "code": "auth.token_invalid",
+          "status": 401,
+          "title": "Token invalid",
+          "summary": "The authentication token is invalid.",
+          "causes": [
+            "Token signature did not validate.",
+            "Token was issued for a different audience or site.",
+            "Token has been revoked."
+          ],
+          "resolution": [
+            "Sign in again to obtain a fresh token.",
+            "If you are forwarding a token from another service, verify the audience matches this API."
+          ]
+        },
+        {
+          "code": "auth.account_locked",
+          "status": 423,
+          "title": "Account locked",
+          "summary": "This account is locked. Please contact support.",
+          "causes": [
+            "Too many failed sign-in attempts.",
+            "Account locked by an administrator.",
+            "Suspicious activity triggered an automatic lockout."
+          ],
+          "resolution": [
+            "Wait for the lockout window to expire, or contact your administrator to unlock the account.",
+            "Hub operators can unlock from `Hub → Users → <user> → Unlock`."
+          ]
+        },
+        {
+          "code": "auth.mfa_required",
+          "status": 401,
+          "title": "MFA required",
+          "summary": "Two-factor authentication is required to complete sign-in.",
+          "causes": [
+            "The account has MFA enabled and the second factor has not been provided.",
+            "The site enforces MFA for all users."
+          ],
+          "resolution": [
+            "Submit the MFA challenge response (`/api/v1/auth/mfa/verify`).",
+            "If the user lost their authenticator, an admin can reset the MFA enrollment."
+          ]
+        },
+        {
+          "code": "auth.site_required",
+          "status": 400,
+          "title": "Site context required",
+          "summary": "The request must include a valid site context.",
+          "causes": [
+            "Missing `X-Site-Id` header on a multi-tenant endpoint.",
+            "Token was issued without a site claim."
+          ],
+          "resolution": [
+            "Include the correct site identifier on the request.",
+            "Re-issue the token with the desired site selected."
+          ]
+        },
+        {
+          "code": "auth.session_invalid",
+          "status": 401,
+          "title": "Session invalid",
+          "summary": "The current session is no longer valid.",
+          "causes": [
+            "Session was terminated server-side.",
+            "Session belongs to a different device fingerprint than the request."
+          ],
+          "resolution": [
+            "Sign in again.",
+            "If sessions are unexpectedly being invalidated, check the session policy on the site."
+          ]
+        },
+        {
+          "code": "auth.invalid_password",
+          "status": 400,
+          "title": "Invalid password",
+          "summary": "The current password is incorrect.",
+          "causes": [
+            "User entered the wrong existing password during a change-password flow."
+          ],
+          "resolution": [
+            "Verify the current password.",
+            "Use the password-reset flow if it is forgotten."
+          ]
+        },
+        {
+          "code": "auth.same_password",
+          "status": 400,
+          "title": "Same password",
+          "summary": "The new password must differ from the current password.",
+          "causes": [
+            "The change-password request supplied a new password identical to the existing one."
+          ],
+          "resolution": [
+            "Choose a new password that is different from the current one and any disallowed-by-history values."
+          ]
+        },
+        {
+          "code": "auth.registration_disabled",
+          "status": 403,
+          "title": "Registration disabled",
+          "summary": "Self-service registration is not enabled for this site.",
+          "causes": [
+            "The site has `allowRegistration = false` in its identity settings.",
+            "Registration was disabled by a Hub operator."
+          ],
+          "resolution": [
+            "Enable registration in site identity settings, or ask an administrator to create the account manually."
+          ]
+        },
+        {
+          "code": "auth.registration_failed",
+          "status": 400,
+          "title": "Registration failed",
+          "summary": "Could not complete registration. Please review your details and try again.",
+          "causes": [
+            "Email already in use.",
+            "Password did not meet complexity policy.",
+            "Required profile fields missing."
+          ],
+          "resolution": [
+            "Inspect the `errors` array on the response for the specific reason.",
+            "Adjust the registration payload and resubmit."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "site",
+      "title": "Site",
+      "description": "Cross-tenant / site-context errors.",
+      "codes": [
+        {
+          "code": "site.context_mismatch",
+          "status": 403,
+          "title": "Site context mismatch",
+          "summary": "The request's site context does not match the resource's site.",
+          "causes": [
+            "Attempted to read or modify a record from a different tenant.",
+            "Token's site claim does not match the `X-Site-Id` header.",
+            "User assumed a site they are not a member of."
+          ],
+          "resolution": [
+            "Confirm the site id on both the token and the request header match the resource's site.",
+            "Re-authenticate with the correct site selected."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "operation",
+      "title": "Operation",
+      "description": "The request shape was valid but the operation could not be performed.",
+      "codes": [
+        {
+          "code": "operation.invalid",
+          "status": 409,
+          "title": "Invalid operation",
+          "summary": "The operation could not be completed in the current state.",
+          "causes": [
+            "Resource is in a state that does not allow this action.",
+            "A prerequisite step has not been completed."
+          ],
+          "resolution": [
+            "Read the `detail` field for the specific reason.",
+            "Complete the missing prerequisite and retry."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "service",
+      "title": "Service",
+      "description": "Server-side faults — generally transient or operator-level issues.",
+      "codes": [
+        {
+          "code": "service.unavailable",
+          "status": 503,
+          "title": "Service unavailable",
+          "summary": "The service is temporarily unavailable. Please try again later.",
+          "causes": [
+            "A downstream dependency (database, cache, queue) is unreachable.",
+            "The service is starting up or shutting down.",
+            "Rate limiting / circuit breaker tripped."
+          ],
+          "resolution": [
+            "Retry with exponential backoff.",
+            "Check the service status page or operator dashboards."
+          ]
+        },
+        {
+          "code": "service.database_error",
+          "status": 500,
+          "title": "Database error",
+          "summary": "A database error occurred. Please try again later.",
+          "causes": [
+            "Postgres is unreachable.",
+            "Connection pool exhausted.",
+            "A query exceeded its statement timeout."
+          ],
+          "resolution": [
+            "Retry the request after a short delay.",
+            "Operator: check Postgres connectivity and slow-query log."
+          ]
+        },
+        {
+          "code": "service.internal_error",
+          "status": 500,
+          "title": "Internal server error",
+          "summary": "An unexpected error occurred. Please try again later.",
+          "causes": [
+            "An unhandled exception was raised by a module.",
+            "A bug surfaced for an unanticipated input."
+          ],
+          "resolution": [
+            "Retry once after a short delay.",
+            "Include the `traceId` from the response when filing a support ticket."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cluster",
+      "title": "Cluster",
+      "description": "Errors from the Hub-side cluster provisioning subsystem.",
+      "codes": [
+        {
+          "code": "cluster.at_capacity",
+          "status": 503,
+          "title": "Cluster at capacity",
+          "summary": "The cluster does not have sufficient capacity to provision this resource.",
+          "causes": [
+            "No worker node has enough CPU / memory / storage to schedule the new pod.",
+            "Storage class has hit its provisioned quota."
+          ],
+          "resolution": [
+            "Scale the cluster (add a worker, increase Longhorn capacity).",
+            "Retry once cluster operators have grown capacity."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "billing",
+      "title": "Billing",
+      "description": "Billing / subscription gating.",
+      "codes": [
+        {
+          "code": "billing.payment_required",
+          "status": 402,
+          "title": "Payment required",
+          "summary": "A valid payment method is required to complete this operation.",
+          "causes": [
+            "Subscription expired or was cancelled.",
+            "Payment method is missing or declined.",
+            "Operation is on a paid plan and the tenant is on a free plan."
+          ],
+          "resolution": [
+            "Update the payment method in the billing portal.",
+            "Upgrade to a plan that includes this feature."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "backup",
+      "title": "Backup",
+      "description": "Errors from the Hub backups subsystem.",
+      "codes": [
+        {
+          "code": "backup.in_progress",
+          "status": 409,
+          "title": "Backup already running",
+          "summary": "A backup is already running. Please wait for it to finish.",
+          "causes": [
+            "An earlier backup job is still active for this tenant.",
+            "A scheduled backup overlapped with a manual one."
+          ],
+          "resolution": [
+            "Wait for the active backup to complete and retry.",
+            "Check the backups list to see the in-flight job."
+          ]
+        },
+        {
+          "code": "backup.not_found",
+          "status": 404,
+          "title": "Backup not found",
+          "summary": "The requested backup does not exist.",
+          "causes": [
+            "Backup id is wrong.",
+            "Backup record was purged by retention policy."
+          ],
+          "resolution": [
+            "Refresh the list of backups and pick a current entry."
+          ]
+        },
+        {
+          "code": "backup.file_not_found",
+          "status": 404,
+          "title": "Backup file missing",
+          "summary": "The backup file could not be located on disk.",
+          "causes": [
+            "The backup record points to a file that has been deleted from storage.",
+            "Storage volume was reset or replaced without re-uploading backups."
+          ],
+          "resolution": [
+            "Check the storage backend for the file.",
+            "If the file is permanently lost, mark the backup record as failed and create a fresh backup."
+          ]
+        },
+        {
+          "code": "backup.test_failed",
+          "status": 500,
+          "title": "Backup test failed",
+          "summary": "Backup restoration test encountered an error.",
+          "causes": [
+            "The test restore environment could not be spun up.",
+            "The backup file is corrupt."
+          ],
+          "resolution": [
+            "Inspect the backup test logs.",
+            "Re-run a fresh backup and test it again."
+          ]
+        },
+        {
+          "code": "backup.insufficient_space",
+          "status": 507,
+          "title": "Insufficient backup space",
+          "summary": "There is not enough disk space to complete this backup.",
+          "causes": [
+            "Backup volume is nearly full.",
+            "Retention policy is keeping more snapshots than the volume can hold."
+          ],
+          "resolution": [
+            "Prune old backups.",
+            "Grow the backup volume."
+          ]
+        },
+        {
+          "code": "backup.invalid_status",
+          "status": 409,
+          "title": "Invalid backup status",
+          "summary": "Only completed backups can be restored.",
+          "causes": [
+            "Attempted to restore a backup that is still running or has failed."
+          ],
+          "resolution": [
+            "Wait until the backup reaches `Completed` status, then restore.",
+            "If the backup failed, run a fresh backup first."
+          ]
+        },
+        {
+          "code": "backup.restore_failed",
+          "status": 500,
+          "title": "Restore failed",
+          "summary": "The restore operation did not complete successfully.",
+          "causes": [
+            "Disk error during restore.",
+            "Schema drift between the backup and the current database."
+          ],
+          "resolution": [
+            "Check server logs for the underlying error.",
+            "If schema drift is suspected, restore to a sidecar database and migrate forward."
+          ]
+        },
+        {
+          "code": "backup.pg_restore_error",
+          "status": 500,
+          "title": "pg_restore error",
+          "summary": "pg_restore returned an error. Check server logs for details.",
+          "causes": [
+            "Backup file format incompatible with the running pg_restore.",
+            "Object ownership or extension mismatch."
+          ],
+          "resolution": [
+            "Match pg_restore version to the backup origin.",
+            "Drop incompatible objects in the target before restoring."
+          ]
+        },
+        {
+          "code": "backup.sql_restore_error",
+          "status": 500,
+          "title": "SQL restore error",
+          "summary": "SQL restore was rolled back due to an error.",
+          "causes": [
+            "A statement in the SQL dump failed (constraint, missing role, etc.).",
+            "Target database is not empty."
+          ],
+          "resolution": [
+            "Inspect the restore log for the failing statement.",
+            "Restore into an empty database and migrate data forward."
+          ]
+        },
+        {
+          "code": "backup.db_connection_error",
+          "status": 500,
+          "title": "Database connection error",
+          "summary": "Could not connect to the database to perform restore.",
+          "causes": [
+            "Database is down or unreachable.",
+            "Restore credentials are wrong."
+          ],
+          "resolution": [
+            "Verify the database is up and the restore credentials are valid.",
+            "Check network policies between the Hub and the target database."
+          ]
+        }
+      ]
+    }
+  ]
+}

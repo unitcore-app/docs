@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Resource not found — UnitCore API errors</title>
+<meta name="description" content="The requested resource was not found.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/resource/not_found">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Resource</p>
+  <div class="header-row">
+    <h1>Resource not found</h1>
+    <span class="badge badge-status-404">404</span>
+  </div>
+  <p class="code-text"><code>resource.not_found</code></p>
+  <p class="summary">The requested resource was not found.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>The id in the URL does not exist for the current tenant.</li>
+    <li>The record was soft-deleted (`is_deleted = true`).</li>
+    <li>The caller is in the wrong site context and the record belongs to a different site.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Verify the id is correct and current.</li>
+    <li>Confirm the request includes the right `X-Site-Id` (or equivalent) header.</li>
+    <li>If you expect the record to still exist, check the audit log for a delete event.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.NotFound</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Token invalid — UnitCore API errors</title>
+<meta name="description" content="The authentication token is invalid.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/auth/token_invalid">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Authentication &amp; authorization</p>
+  <div class="header-row">
+    <h1>Token invalid</h1>
+    <span class="badge badge-status-401">401</span>
+  </div>
+  <p class="code-text"><code>auth.token_invalid</code></p>
+  <p class="summary">The authentication token is invalid.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>Token signature did not validate.</li>
+    <li>Token was issued for a different audience or site.</li>
+    <li>Token has been revoked.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Sign in again to obtain a fresh token.</li>
+    <li>If you are forwarding a token from another service, verify the audience matches this API.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.AuthTokenInvalid</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

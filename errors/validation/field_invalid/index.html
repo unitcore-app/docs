@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Field has an invalid value — UnitCore API errors</title>
+<meta name="description" content="A field was present but its value did not pass type or format checks.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/validation/field_invalid">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Validation</p>
+  <div class="header-row">
+    <h1>Field has an invalid value</h1>
+    <span class="badge badge-status-400">400</span>
+  </div>
+  <p class="code-text"><code>validation.field_invalid</code></p>
+  <p class="summary">A field was present but its value did not pass type or format checks.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>Wrong data type (string where number expected, etc.).</li>
+    <li>Value outside an allowed enum / range.</li>
+    <li>Malformed GUID, date, or email.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Inspect the `errors` array — each entry includes the field path and the failed rule.</li>
+    <li>Normalize the value client-side before sending.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.ValidationFieldInvalid</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

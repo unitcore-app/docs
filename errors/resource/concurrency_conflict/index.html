@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Concurrency conflict — UnitCore API errors</title>
+<meta name="description" content="The resource was modified by another request. Please reload and try again.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/resource/concurrency_conflict">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Resource</p>
+  <div class="header-row">
+    <h1>Concurrency conflict</h1>
+    <span class="badge badge-status-409">409</span>
+  </div>
+  <p class="code-text"><code>resource.concurrency_conflict</code></p>
+  <p class="summary">The resource was modified by another request. Please reload and try again.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>Optimistic concurrency token (rowversion / updatedAt) did not match server state.</li>
+    <li>Two clients edited the same record at the same time.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Re-fetch the resource to get the latest concurrency token.</li>
+    <li>Re-apply your changes on top of the fresh copy and submit again.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.ConcurrencyConflict</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>
