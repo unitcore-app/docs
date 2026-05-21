@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agent key missing site — UnitCore API errors</title>
+<meta name="description" content="The agent key is valid but is not bound to a site, and the endpoint requires one.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/auth/agent_key_no_site">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Authentication &amp; authorization</p>
+  <div class="header-row">
+    <h1>Agent key missing site</h1>
+    <span class="badge badge-status-400">400</span>
+  </div>
+  <p class="code-text"><code>auth.agent_key_no_site</code></p>
+  <p class="summary">The agent key is valid but is not bound to a site, and the endpoint requires one.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>Agent key was created without a site binding.</li>
+    <li>Calling a tenant endpoint with a global agent key.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Re-issue the key with the target site bound to it.</li>
+    <li>Use a site-scoped key for tenant endpoints.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.AuthAgentKeyNoSite</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

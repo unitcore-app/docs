@@ -5,6 +5,9 @@
   <url><loc>https://docs.unitcore.app/errors/validation/field_required</loc></url>
   <url><loc>https://docs.unitcore.app/errors/validation/field_invalid</loc></url>
   <url><loc>https://docs.unitcore.app/errors/validation/argument</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/validation/invalid_dev_bypass</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/validation/locale_required</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/validation/site_required</loc></url>
   <url><loc>https://docs.unitcore.app/errors/resource/not_found</loc></url>
   <url><loc>https://docs.unitcore.app/errors/resource/duplicate</loc></url>
   <url><loc>https://docs.unitcore.app/errors/resource/constraint_violation</loc></url>
@@ -23,11 +26,33 @@
   <url><loc>https://docs.unitcore.app/errors/auth/same_password</loc></url>
   <url><loc>https://docs.unitcore.app/errors/auth/registration_disabled</loc></url>
   <url><loc>https://docs.unitcore.app/errors/auth/registration_failed</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/auth/apikey_insufficient_permissions</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/auth/agent_key_unavailable</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/auth/agent_key_invalid</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/auth/agent_key_no_site</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/auth/agent_key_path_forbidden</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/auth/portal_audience_not_allowed</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/auth/endpoint_requires_permission_config</loc></url>
   <url><loc>https://docs.unitcore.app/errors/site/context_mismatch</loc></url>
   <url><loc>https://docs.unitcore.app/errors/operation/invalid</loc></url>
   <url><loc>https://docs.unitcore.app/errors/service/unavailable</loc></url>
   <url><loc>https://docs.unitcore.app/errors/service/database_error</loc></url>
   <url><loc>https://docs.unitcore.app/errors/service/internal_error</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/service/too_many_connections</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/rate/limit_exceeded</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/cors/origin_not_allowed</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/network/invalid_host</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/network/websocket_required</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/feature/not_implemented</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/scraping/missing_idempotency_key</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/scraping/body_too_large</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/scraping/missing_tenant_id</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/scraping/invalid_tenant_id</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/scraping/missing_tenant_header</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/scraping/malformed_payload</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/scraping/empty_payload</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/scraping/invalid_signature</loc></url>
+  <url><loc>https://docs.unitcore.app/errors/scraping/unknown_job</loc></url>
   <url><loc>https://docs.unitcore.app/errors/cluster/at_capacity</loc></url>
   <url><loc>https://docs.unitcore.app/errors/billing/payment_required</loc></url>
   <url><loc>https://docs.unitcore.app/errors/backup/in_progress</loc></url>

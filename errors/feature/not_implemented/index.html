@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Not implemented — UnitCore API errors</title>
+<meta name="description" content="The endpoint exists but its underlying feature is not implemented in the current build.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/feature/not_implemented">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Feature</p>
+  <div class="header-row">
+    <h1>Not implemented</h1>
+    <span class="badge badge-status-501">501</span>
+  </div>
+  <p class="code-text"><code>feature.not_implemented</code></p>
+  <p class="summary">The endpoint exists but its underlying feature is not implemented in the current build.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>Feature module is disabled in this deployment mode.</li>
+    <li>Endpoint is a placeholder for a planned feature.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Enable the owning module in `Modules__Enabled` (if available).</li>
+    <li>Track the feature roadmap for completion.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.FeatureNotImplemented</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

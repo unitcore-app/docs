@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Origin not allowed — UnitCore API errors</title>
+<meta name="description" content="The browser origin is not on the allow-list for this API.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/cors/origin_not_allowed">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; CORS</p>
+  <div class="header-row">
+    <h1>Origin not allowed</h1>
+    <span class="badge badge-status-403">403</span>
+  </div>
+  <p class="code-text"><code>cors.origin_not_allowed</code></p>
+  <p class="summary">The browser origin is not on the allow-list for this API.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>Frontend hosted on a domain not registered with the site.</li>
+    <li>Misconfigured CORS allow-list on the API.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Add the origin to the site&#x27;s CORS allow-list.</li>
+    <li>Use a same-origin request through your own backend proxy.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.CorsOriginNotAllowed</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

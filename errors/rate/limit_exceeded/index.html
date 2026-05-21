@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rate limit exceeded — UnitCore API errors</title>
+<meta name="description" content="You have exceeded the request rate for this endpoint.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/rate/limit_exceeded">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Rate limiting</p>
+  <div class="header-row">
+    <h1>Rate limit exceeded</h1>
+    <span class="badge badge-status-429">429</span>
+  </div>
+  <p class="code-text"><code>rate.limit_exceeded</code></p>
+  <p class="summary">You have exceeded the request rate for this endpoint.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>Too many requests in a short window.</li>
+    <li>A single client is hammering an endpoint without backoff.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Honour the `Retry-After` response header.</li>
+    <li>Add client-side rate limiting and exponential backoff.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.RateLimitExceeded</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Invalid dev bypass — UnitCore API errors</title>
+<meta name="description" content="The development-only authentication bypass header is malformed or used outside development mode.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/validation/invalid_dev_bypass">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Validation</p>
+  <div class="header-row">
+    <h1>Invalid dev bypass</h1>
+    <span class="badge badge-status-400">400</span>
+  </div>
+  <p class="code-text"><code>validation.invalid_dev_bypass</code></p>
+  <p class="summary">The development-only authentication bypass header is malformed or used outside development mode.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>Header `X-Dev-Bypass` was sent in a non-development environment.</li>
+    <li>The bypass value does not match the configured development secret.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Remove the dev-bypass header from production requests.</li>
+    <li>In development, ensure the header value matches `DevAuth:BypassToken` from configuration.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.ValidationInvalidDevBypass</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

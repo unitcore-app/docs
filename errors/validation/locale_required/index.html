@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Locale required — UnitCore API errors</title>
+<meta name="description" content="The endpoint requires an explicit locale and none was provided.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/validation/locale_required">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Validation</p>
+  <div class="header-row">
+    <h1>Locale required</h1>
+    <span class="badge badge-status-400">400</span>
+  </div>
+  <p class="code-text"><code>validation.locale_required</code></p>
+  <p class="summary">The endpoint requires an explicit locale and none was provided.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>Missing `Accept-Language` header or locale path segment.</li>
+    <li>Token has no default locale claim.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Send an `Accept-Language` header with a supported BCP 47 locale (e.g. `en`, `uk`).</li>
+    <li>Set a default locale on the user profile.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.ValidationLocaleRequired</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

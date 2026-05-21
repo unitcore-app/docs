@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Missing tenant header — UnitCore API errors</title>
+<meta name="description" content="The required tenant header was not sent.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/scraping/missing_tenant_header">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Scraping</p>
+  <div class="header-row">
+    <h1>Missing tenant header</h1>
+    <span class="badge badge-status-400">400</span>
+  </div>
+  <p class="code-text"><code>scraping.missing_tenant_header</code></p>
+  <p class="summary">The required tenant header was not sent.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>Client did not include the tenant header on the request.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Send the tenant header on every scraping request.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.ScrapingMissingTenantHeader</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

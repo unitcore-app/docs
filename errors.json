@@ -65,6 +65,48 @@
             "Verify all query-string and route parameters match the API contract.",
             "URL-encode values that contain reserved characters."
           ]
+        },
+        {
+          "code": "validation.invalid_dev_bypass",
+          "status": 400,
+          "title": "Invalid dev bypass",
+          "summary": "The development-only authentication bypass header is malformed or used outside development mode.",
+          "causes": [
+            "Header `X-Dev-Bypass` was sent in a non-development environment.",
+            "The bypass value does not match the configured development secret."
+          ],
+          "resolution": [
+            "Remove the dev-bypass header from production requests.",
+            "In development, ensure the header value matches `DevAuth:BypassToken` from configuration."
+          ]
+        },
+        {
+          "code": "validation.locale_required",
+          "status": 400,
+          "title": "Locale required",
+          "summary": "The endpoint requires an explicit locale and none was provided.",
+          "causes": [
+            "Missing `Accept-Language` header or locale path segment.",
+            "Token has no default locale claim."
+          ],
+          "resolution": [
+            "Send an `Accept-Language` header with a supported BCP 47 locale (e.g. `en`, `uk`).",
+            "Set a default locale on the user profile."
+          ]
+        },
+        {
+          "code": "validation.site_required",
+          "status": 400,
+          "title": "Site required",
+          "summary": "The endpoint requires a site context and none was provided.",
+          "causes": [
+            "Missing site selector on a multi-tenant endpoint.",
+            "Token issued without a site claim."
+          ],
+          "resolution": [
+            "Include the site identifier on the request.",
+            "Re-issue the token with the desired site selected."
+          ]
         }
       ]
     },
@@ -337,6 +379,104 @@
             "Inspect the `errors` array on the response for the specific reason.",
             "Adjust the registration payload and resubmit."
           ]
+        },
+        {
+          "code": "auth.apikey_insufficient_permissions",
+          "status": 403,
+          "title": "API key lacks required permissions",
+          "summary": "The API key authenticated the caller, but its scope does not include the permission this endpoint requires.",
+          "causes": [
+            "The API key was minted with a narrower permission set than the endpoint requires.",
+            "The endpoint's required permission was added after the key was issued."
+          ],
+          "resolution": [
+            "Re-issue the API key with the additional permission.",
+            "Use a user token (with the right role) instead of an API key for this endpoint."
+          ]
+        },
+        {
+          "code": "auth.agent_key_unavailable",
+          "status": 503,
+          "title": "Agent key unavailable",
+          "summary": "The agent-key authentication backend could not be reached.",
+          "causes": [
+            "The agent key service is down or starting up.",
+            "Network policy blocks the API from the agent key store."
+          ],
+          "resolution": [
+            "Retry after a short delay.",
+            "Operator: check the agent key service health."
+          ]
+        },
+        {
+          "code": "auth.agent_key_invalid",
+          "status": 401,
+          "title": "Agent key invalid",
+          "summary": "The presented agent key is not recognized or has been revoked.",
+          "causes": [
+            "Key was deleted or rotated.",
+            "Key was minted for a different environment."
+          ],
+          "resolution": [
+            "Mint a fresh agent key from the correct environment.",
+            "Re-deploy the agent with the new key."
+          ]
+        },
+        {
+          "code": "auth.agent_key_no_site",
+          "status": 400,
+          "title": "Agent key missing site",
+          "summary": "The agent key is valid but is not bound to a site, and the endpoint requires one.",
+          "causes": [
+            "Agent key was created without a site binding.",
+            "Calling a tenant endpoint with a global agent key."
+          ],
+          "resolution": [
+            "Re-issue the key with the target site bound to it.",
+            "Use a site-scoped key for tenant endpoints."
+          ]
+        },
+        {
+          "code": "auth.agent_key_path_forbidden",
+          "status": 403,
+          "title": "Agent key path forbidden",
+          "summary": "The agent key is valid but is not allowed to call this path.",
+          "causes": [
+            "The key's `allowedPaths` allow-list does not match the request path.",
+            "Trying to use an agent key on a user-only endpoint."
+          ],
+          "resolution": [
+            "Update the key's `allowedPaths` to include this endpoint.",
+            "Use a different key (or a user token) with broader access."
+          ]
+        },
+        {
+          "code": "auth.portal_audience_not_allowed",
+          "status": 403,
+          "title": "Portal audience not allowed",
+          "summary": "The token was issued for a different audience than the endpoint accepts.",
+          "causes": [
+            "Hub portal token used against a tenant API (or vice versa).",
+            "Audience claim was rewritten by a misconfigured proxy."
+          ],
+          "resolution": [
+            "Obtain a token whose `aud` claim matches the target API.",
+            "Stop forwarding tokens across audience boundaries."
+          ]
+        },
+        {
+          "code": "auth.endpoint_requires_permission_config",
+          "status": 500,
+          "title": "Endpoint missing permission config",
+          "summary": "An authenticated endpoint is missing its `[RequirePermission]` configuration; strict mode rejects it.",
+          "causes": [
+            "An endpoint has `[Authorize]` but no `[RequirePermission]` — strict mode (production default) refuses to serve it.",
+            "Developer added the route but forgot to declare the permission."
+          ],
+          "resolution": [
+            "Add the appropriate `[RequirePermission(\"...\")]` attribute to the endpoint.",
+            "File an audit ticket — this is the strict-permissions endpoint gap class of bug."
+          ]
         }
       ]
     },
@@ -430,6 +570,242 @@
           "resolution": [
             "Retry once after a short delay.",
             "Include the `traceId` from the response when filing a support ticket."
+          ]
+        },
+        {
+          "code": "service.too_many_connections",
+          "status": 503,
+          "title": "Too many connections",
+          "summary": "The service is at its connection limit and cannot accept this request right now.",
+          "causes": [
+            "Connection pool exhausted under load.",
+            "A client is leaking connections."
+          ],
+          "resolution": [
+            "Retry with exponential backoff.",
+            "Operator: investigate clients holding connections open."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rate",
+      "title": "Rate limiting",
+      "description": "The caller exceeded a request rate or quota.",
+      "codes": [
+        {
+          "code": "rate.limit_exceeded",
+          "status": 429,
+          "title": "Rate limit exceeded",
+          "summary": "You have exceeded the request rate for this endpoint.",
+          "causes": [
+            "Too many requests in a short window.",
+            "A single client is hammering an endpoint without backoff."
+          ],
+          "resolution": [
+            "Honour the `Retry-After` response header.",
+            "Add client-side rate limiting and exponential backoff."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cors",
+      "title": "CORS",
+      "description": "Cross-origin request rejected.",
+      "codes": [
+        {
+          "code": "cors.origin_not_allowed",
+          "status": 403,
+          "title": "Origin not allowed",
+          "summary": "The browser origin is not on the allow-list for this API.",
+          "causes": [
+            "Frontend hosted on a domain not registered with the site.",
+            "Misconfigured CORS allow-list on the API."
+          ],
+          "resolution": [
+            "Add the origin to the site's CORS allow-list.",
+            "Use a same-origin request through your own backend proxy."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "network",
+      "title": "Network",
+      "description": "Transport / protocol-level errors.",
+      "codes": [
+        {
+          "code": "network.invalid_host",
+          "status": 400,
+          "title": "Invalid host",
+          "summary": "The `Host` header is not on the API's allow-list.",
+          "causes": [
+            "Request is hitting the API through an unexpected DNS name.",
+            "Host header was rewritten or spoofed by an intermediary."
+          ],
+          "resolution": [
+            "Use one of the configured hostnames (see `Security__AllowedHosts`).",
+            "Operator: add the missing host to `values.security.extraAllowedHosts`."
+          ]
+        },
+        {
+          "code": "network.websocket_required",
+          "status": 400,
+          "title": "WebSocket required",
+          "summary": "This endpoint requires a WebSocket upgrade and the client sent a plain HTTP request.",
+          "causes": [
+            "Calling a SignalR / WebSocket endpoint with `fetch` or `curl`.",
+            "Proxy stripped the `Upgrade` header."
+          ],
+          "resolution": [
+            "Use a WebSocket client.",
+            "Configure intermediaries to forward `Upgrade` and `Connection` headers."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "feature",
+      "title": "Feature",
+      "description": "The requested feature is not enabled or not implemented.",
+      "codes": [
+        {
+          "code": "feature.not_implemented",
+          "status": 501,
+          "title": "Not implemented",
+          "summary": "The endpoint exists but its underlying feature is not implemented in the current build.",
+          "causes": [
+            "Feature module is disabled in this deployment mode.",
+            "Endpoint is a placeholder for a planned feature."
+          ],
+          "resolution": [
+            "Enable the owning module in `Modules__Enabled` (if available).",
+            "Track the feature roadmap for completion."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scraping",
+      "title": "Scraping",
+      "description": "Errors specific to the scraping ingestion endpoints.",
+      "codes": [
+        {
+          "code": "scraping.missing_idempotency_key",
+          "status": 400,
+          "title": "Missing idempotency key",
+          "summary": "Scraping ingestion requires an `Idempotency-Key` header and none was sent.",
+          "causes": [
+            "Client omitted the `Idempotency-Key` header."
+          ],
+          "resolution": [
+            "Generate a unique key per job and send it as `Idempotency-Key`."
+          ]
+        },
+        {
+          "code": "scraping.body_too_large",
+          "status": 413,
+          "title": "Body too large",
+          "summary": "The scraping payload exceeds the maximum allowed size.",
+          "causes": [
+            "Single batch is too large.",
+            "Embedded blobs not compressed."
+          ],
+          "resolution": [
+            "Split the payload into smaller batches.",
+            "Compress large fields before sending."
+          ]
+        },
+        {
+          "code": "scraping.missing_tenant_id",
+          "status": 400,
+          "title": "Missing tenant id",
+          "summary": "Scraping payload did not include a tenant id.",
+          "causes": [
+            "Body is missing the required tenant identifier."
+          ],
+          "resolution": [
+            "Include the tenant id in the payload."
+          ]
+        },
+        {
+          "code": "scraping.invalid_tenant_id",
+          "status": 400,
+          "title": "Invalid tenant id",
+          "summary": "Tenant id is not a valid identifier for any known tenant.",
+          "causes": [
+            "Wrong tenant id format.",
+            "Tenant was deleted or renamed."
+          ],
+          "resolution": [
+            "Confirm the tenant id from Hub.",
+            "Stop sending traffic for deleted tenants."
+          ]
+        },
+        {
+          "code": "scraping.missing_tenant_header",
+          "status": 400,
+          "title": "Missing tenant header",
+          "summary": "The required tenant header was not sent.",
+          "causes": [
+            "Client did not include the tenant header on the request."
+          ],
+          "resolution": [
+            "Send the tenant header on every scraping request."
+          ]
+        },
+        {
+          "code": "scraping.malformed_payload",
+          "status": 400,
+          "title": "Malformed payload",
+          "summary": "The scraping payload could not be parsed.",
+          "causes": [
+            "Invalid JSON.",
+            "Schema does not match the expected ingestion contract."
+          ],
+          "resolution": [
+            "Validate the payload against the ingestion schema before sending."
+          ]
+        },
+        {
+          "code": "scraping.empty_payload",
+          "status": 400,
+          "title": "Empty payload",
+          "summary": "The scraping payload is empty.",
+          "causes": [
+            "Client sent a request with no body or an empty batch."
+          ],
+          "resolution": [
+            "Skip sending requests with no items, or include at least one record."
+          ]
+        },
+        {
+          "code": "scraping.invalid_signature",
+          "status": 401,
+          "title": "Invalid signature",
+          "summary": "The scraping payload signature did not verify.",
+          "causes": [
+            "Signing secret rotated and the client is using the old one.",
+            "Payload was modified after signing."
+          ],
+          "resolution": [
+            "Re-fetch the current signing secret and re-sign the payload.",
+            "Sign over the exact bytes that are sent on the wire."
+          ]
+        },
+        {
+          "code": "scraping.unknown_job",
+          "status": 404,
+          "title": "Unknown job",
+          "summary": "The referenced scraping job does not exist.",
+          "causes": [
+            "Job id is wrong.",
+            "Job was purged by retention policy."
+          ],
+          "resolution": [
+            "List active jobs and use a valid id.",
+            "Re-create the job if needed."
           ]
         }
       ]

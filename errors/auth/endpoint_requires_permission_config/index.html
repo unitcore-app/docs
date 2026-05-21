@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Endpoint missing permission config — UnitCore API errors</title>
+<meta name="description" content="An authenticated endpoint is missing its `[RequirePermission]` configuration; strict mode rejects it.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/auth/endpoint_requires_permission_config">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Authentication &amp; authorization</p>
+  <div class="header-row">
+    <h1>Endpoint missing permission config</h1>
+    <span class="badge badge-status-500">500</span>
+  </div>
+  <p class="code-text"><code>auth.endpoint_requires_permission_config</code></p>
+  <p class="summary">An authenticated endpoint is missing its `[RequirePermission]` configuration; strict mode rejects it.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>An endpoint has `[Authorize]` but no `[RequirePermission]` — strict mode (production default) refuses to serve it.</li>
+    <li>Developer added the route but forgot to declare the permission.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Add the appropriate `[RequirePermission(&quot;...&quot;)]` attribute to the endpoint.</li>
+    <li>File an audit ticket — this is the strict-permissions endpoint gap class of bug.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.AuthEndpointRequiresPermissionConfig</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>

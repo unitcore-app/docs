@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agent key path forbidden — UnitCore API errors</title>
+<meta name="description" content="The agent key is valid but is not allowed to call this path.">
+<link rel="canonical" href="https://docs.unitcore.app/errors/auth/agent_key_path_forbidden">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="error-page">
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">UnitCore <span>docs</span></a>
+    <nav>
+      <a href="/">Errors</a>
+      <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="breadcrumb"><a href="/">Errors</a> &nbsp;/&nbsp; Authentication &amp; authorization</p>
+  <div class="header-row">
+    <h1>Agent key path forbidden</h1>
+    <span class="badge badge-status-403">403</span>
+  </div>
+  <p class="code-text"><code>auth.agent_key_path_forbidden</code></p>
+  <p class="summary">The agent key is valid but is not allowed to call this path.</p>
+
+  <h2>Common causes</h2>
+  <ul>
+    <li>The key&#x27;s `allowedPaths` allow-list does not match the request path.</li>
+    <li>Trying to use an agent key on a user-only endpoint.</li>
+  </ul>
+
+  <h2>How to resolve</h2>
+  <ul>
+    <li>Update the key&#x27;s `allowedPaths` to include this endpoint.</li>
+    <li>Use a different key (or a user token) with broader access.</li>
+  </ul>
+
+  <p class="source-link">
+    Canonical definition: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs"><code>ApiErrorCodes.AuthAgentKeyPathForbidden</code></a> in <code>unitcore-crm/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs</code>.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Source of truth: <a href="https://github.com/unitcore-app/unitcore-crm/blob/main/backend/src/Kernel/Api/ErrorCodes/ApiErrorCodes.cs">ApiErrorCodes.cs</a></p>
+  </div>
+</footer>
+</body>
+</html>
